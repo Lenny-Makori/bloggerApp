@@ -1,0 +1,36 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<title>{{title}}</title>
+{% extends 'base.html'%}
+{%block styles%}
+{%endblock%}
+{% block content %}
+
+<h2 style="text-align: center;"><u>{{blog.title}}</u></h2>
+<p style="text-align: center;">{{blog.description}}</p>
+<hr>
+{% if current_user.is_authenticated %}
+<p style="text-align: center; font-size: 20px;"><a class="ratings" href="/user/blog/newcomment/{{blog.id}}" > Comment!</a></p>
+{% else %}
+Sign In Please To comment on this blog!
+<a href="{{url_for('auth.login')}}">Sign in</a>
+{% endif%}
+<div class="col-md-4">
+    {%if blog.comment%}
+    
+    {% for comment in blog.comment %}
+    <ul>
+      <li>{{comment.comment}}</li>
+      <a type="button" class="btn btn-primary" style="height: 30px;" href="/comment/delete/{{comment.id}}" >delete</a>
+
+    </ul>
+    {% endfor %}
+    {%else%}
+    <p>There are no comments yet for this blog..</p>
+    
+    {% endif %}  
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+
+{% endblock%}

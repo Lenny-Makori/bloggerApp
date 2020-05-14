@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+{%block styles%}
+
+{% endblock %}
+<!-- Content block -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="text-align: center;">...BLOGGY...</h2>
+            <p style="text-align: center;">{{message}}</p>
+        </div>
+        
+        <hr>
+    </div>
+    {%if current_user.is_authenticated%}
+        <div class="row" >
+            <div class="col-md-1">
+                <p style="text-align: center;"><a class="ratings" href="/user/blog/new/{{user.id}}"> Write a new Blog</a></p>
+            </div>
+            
+        </div>
+    {%else%}
+    <p>Kindly sign in so as to add a blog!</p><a href="{{url_for('auth.login')}}">Sign in</a>
+    {%endif%}
+        
+   {%if blogs%}
+    {% for blog in blogs %}
+    <div class="card text" >
+        <div class="card-header">
+            <h3 style="text-align: center;">{{blog.title}}</h3>
+        </div>
+        <div class="card-body" style="text-align: center;">
+            <p>{{blog.description |truncate (20)}}</p>
+            <a class="ratings" href="/blog/{{blog.id}}"> More on the Blog</a>
+        </div>
+    </div>
+    {% endfor %}
+    {%else%}
+    
+    <p style="text-align: center;"><a class="ratings" href="/user/blog/new/{{user.id}}"> Be the first to Blog</a></p>
+    {%endif%}
+    <!-- ********************* -->
+
+
+
+
+
+
+</div>
+
+
+{% endblock%}

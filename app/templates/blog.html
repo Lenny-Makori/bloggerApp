@@ -1,15 +1,12 @@
-{% import "bootstrap/wtf.html" as wtf %}
-<title>{{title}}</title>
 {% extends 'base.html'%}
-{%block styles%}
-{%endblock%}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 
 <h2 style="text-align: center;"><u>{{blog.title}}</u></h2>
-<p style="text-align: center;">{{blog.description}}</p>
+<h3 style="text-align: center;">{{blog.description}}</h3>
 <hr>
 {% if current_user.is_authenticated %}
-<p style="text-align: center; font-size: 20px;"><a class="ratings" href="/user/blog/newcomment/{{blog.id}}" > Comment!</a></p>
+<p style="text-align: center; font-size: 20px;"><a class="ratings" href="/user/blog/newcomment/{{blog.id}}" >Add Comment</a></p>
 {% else %}
 Sign In Please To comment on this blog!
 <a href="{{url_for('auth.login')}}">Sign in</a>
@@ -20,7 +17,7 @@ Sign In Please To comment on this blog!
     {% for comment in blog.comment %}
     <ul>
       <li>{{comment.comment}}</li>
-      <a type="button" class="btn btn-primary" style="height: 30px;" href="/comment/delete/{{comment.id}}" >delete</a>
+      <a type="button" class="btn btn-outline-danger" style="height: 30px;" href="/comment/delete/{{comment.id}}" >delete</a>
 
     </ul>
     {% endfor %}

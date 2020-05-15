@@ -1,46 +1,54 @@
 {% extends 'base.html'%}
-{%block styles%}
 
-{% endblock %}
 <!-- Content block -->
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 style="text-align: center;">...BLOGGY...</h2>
-            <p style="text-align: center;">{{message}}</p>
+            <h2 style="text-align: center;">WELCOME TO THE BLOGGERS APP</h2>
+            <p style="text-align: center;"></p>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            *****************************************************************************************************************************
+            <h4><strong>"{{quote.quote}}"</strong></h4>
+            <h5>By <strong>{{quote.author}}</strong></h5>
+            *****************************************************************************************************************************
         </div>
         
         <hr>
     </div>
-    {%if current_user.is_authenticated%}
-        <div class="row" >
-            <div class="col-md-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {%if current_user.is_authenticated%}
                 <p style="text-align: center;"><a class="ratings" href="/user/blog/new/{{user.id}}"> Write a new Blog</a></p>
+
+                {%else%}
+                <p>Sign in and post your Blogs now!!</p><a href="{{url_for('auth.login')}}">Sign in</a>
+                {%endif%}
             </div>
-            
-        </div>
-    {%else%}
-    <p>Kindly sign in so as to add a blog!</p><a href="{{url_for('auth.login')}}">Sign in</a>
-    {%endif%}
+            <div class="col-md-6">
+                {%if blogs%}
+                {% for blog in blogs %}
+                <div class="card" >
+                    <h3>--------------------------------------------------------------------</h3>
+                    <h3 class="card-title" style="text-align: center;"><strong>{{blog.title}}</strong></h3>
+                    <div class="card-body" style="text-align: center;">
+                        <p>{{blog.description |truncate (30)}}</p>
+                        <a class="ratings" href="/blog/{{blog.id}}"> View Blog</a>
+                    </div>
+                </div>
+                {% endfor %}
+                {%else%}
+                           <p style="text-align: center;"><a class="ratings" href="/user/blog/new/{{user.id}}"> Create your First Blog here.</a></p>
+                {%endif%}
+            </div>
         
-   {%if blogs%}
-    {% for blog in blogs %}
-    <div class="card text" >
-        <div class="card-header">
-            <h3 style="text-align: center;">{{blog.title}}</h3>
-        </div>
-        <div class="card-body" style="text-align: center;">
-            <p>{{blog.description |truncate (20)}}</p>
-            <a class="ratings" href="/blog/{{blog.id}}"> More on the Blog</a>
+   
         </div>
     </div>
-    {% endfor %}
-    {%else%}
-    
-    <p style="text-align: center;"><a class="ratings" href="/user/blog/new/{{user.id}}"> Be the first to Blog</a></p>
-    {%endif%}
-    <!-- ********************* -->
+
 
 
 

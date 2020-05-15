@@ -5,6 +5,7 @@ from .forms import UpdateProfile,BlogForm,CommentForm
 from ..import db,photos
 from ..models import User,Blog,Comments
 from ..email import mail_message
+from ..requests import get_quote
 @main.route('/')
 
 def index():
@@ -16,7 +17,9 @@ def index():
     
     title="Blog App"
     message="Welcome to blog app"
-    return render_template('index.html',title=title,message=message,user=user,blogs=blogs)
+
+    quote = get_quote()
+    return render_template('index.html',title=title,message=message,user=user,blogs=blogs, quote=quote)
 
 @main.route('/user/<uname>')
 def profile(uname):

@@ -1,0 +1,2 @@
+Hello {{user.username}} You just posted a blog!!
+Lets wait and see on what others think about it!
